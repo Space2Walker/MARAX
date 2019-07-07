@@ -29,6 +29,26 @@
     "files": [
       {
         "filesystem": "root",
+        "path": "/etc/hostname",
+        "contents": {
+          "source": "data:,MARAX",
+          "verification": {}
+        },
+        "mode": 420
+      },
+      {
+        "filesystem": "root",
+        "path": "/opt/bin/docker-compose",
+        "contents": {
+          "source": "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64",
+          "verification": {
+            "hash": "sha512-5A9CCBE01CBF585732907F38FBACC21AECD2EDC9351BD1EE91DF750740A7FFF9D73BD489D708087D9D8892AD8F448A78A8EE401D240A51D0202ED0C08E30BF88"
+          }
+        },
+        "mode": 420
+      },
+      {
+        "filesystem": "root",
         "path": "/etc/docker/ca.pem",
         "contents": {
           "source": "data:,-----BEGIN%20CERTIFICATE-----%0AMIIFNDCCAx6gAwIBAgIBATALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw%0ADgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDExMDhaFw0y%0ANTA5MDIxMDExMThaMC0xDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEL%0A...%20...%20...%0A",
