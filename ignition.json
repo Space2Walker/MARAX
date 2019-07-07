@@ -1,0 +1,59 @@
+{
+  "ignition": {
+    "config": {},
+    "security": {
+      "tls": {}
+    },
+    "timeouts": {},
+    "version": "2.2.0"
+  },
+  "networkd": {
+    "units": [
+      {
+        "contents": "[Match]\nName=en*\n\n[Network]\nLinkLocalAddressing=ipv4\nIPv6AcceptRA=no\nDHCP=yes\n",
+        "name": "00-eth0.network"
+      }
+    ]
+  },
+  "passwd": {
+    "users": [
+      {
+        "name": "core",
+        "sshAuthorizedKeys": [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxJ6isQw/a1W+9YYCaU6Uf67HxUaM8zRqmeMesPxEycJqcxtcsvv/E6u59vx3FN1uk1tbJDUcXg5T0kW7upGiO9A6sklobNIfqthWrYr6Zb7EvEGyhkWqGDC1t/iRCp3mncvWvOrQ0b04Pk4zBZLfg9aebgcy5v+ailgZb0Y83B6TqgrZlgd6aSNYhemxtWo96eATM7vA3bSMQXrc6jDr1GBWv8rCiBU9kTX7/iVavnD+TrDSLQntZenbIA3GdLHufu65ViZPtNt0JVJT5d8LDyw9fUGZiCKVBVtHX9TYEKtE0cS0Vhr1WtE/Xsd844yv2xFyRRiN2I3/mJbupFHloq87Ituat/ZG26+kHHra3JpJd5YLNhMThlZuY2nJclTptE4ZD+LTaPHWgWdjh9GWnLd0WsdOc0hOXuLD6K6bNxBhS4aH+JOxqaYHLlRKsP+2e7nFsTOX2spWpl9D9LXze9tUedvibOOSsukZyrUfXkku9IuZzudski8dtN0xu/Hrw2uYyTos58Ig5sWbw3xfpmVE2KWzIB50/puuvJV65nYToswkWHYxmlhKu+JJdzG905qOZ/uZs14oNb9PNJwVLVKmO3SxCnC14fV+ZFNm70tJanzYxYz58chLzA9GjLIWSzBnWP4/ANK3c7CkGiV5UP6D9jBmAa2a4qeznUfSlbQ== Lordgreybuffer@protonmail.com"
+        ]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "filesystem": "root",
+        "path": "/etc/docker/ca.pem",
+        "contents": {
+          "source": "data:,-----BEGIN%20CERTIFICATE-----%0AMIIFNDCCAx6gAwIBAgIBATALBgkqhkiG9w0BAQswLTEMMAoGA1UEBhMDVVNBMRAw%0ADgYDVQQKEwdldGNkLWNhMQswCQYDVQQLEwJDQTAeFw0xNTA5MDIxMDExMDhaFw0y%0ANTA5MDIxMDExMThaMC0xDDAKBgNVBAYTA1VTQTEQMA4GA1UEChMHZXRjZC1jYTEL%0A...%20...%20...%0A",
+          "verification": {}
+        },
+        "mode": 420
+      },
+      {
+        "filesystem": "root",
+        "path": "/etc/coreos/update.conf",
+        "contents": {
+          "source": "data:,%0AREBOOT_STRATEGY%3D%22reboot%22%0ALOCKSMITHD_REBOOT_WINDOW_START%3D%22Wed%2004%3A00%22%0ALOCKSMITHD_REBOOT_WINDOW_LENGTH%3D%221h%22",
+          "verification": {}
+        },
+        "mode": 420
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=nginx (Docker)\n# start this unit only after docker has started\nAfter=docker.service\nRequires=docker.service\n\n[Service]\nTimeoutStartSec=0\nRestart=always\n# The following lines start with '-' because they are allowed to fail without\n# causing startup to fail.\n#      \n# Kill the old instance, if it's still running for some reason\nExecStartPre=-/usr/bin/docker kill nginx\n# Remove the old instance, if it stuck around\nExecStartPre=-/usr/bin/docker rm nginx\n# Pull the latest version of the container; NOTE you should be careful to\n# pull a tagged version, that way you won't accidentially pull a major-version\n# upgrade and break your service!\nExecStartPre=-/usr/bin/docker pull \"nginx:1.13\"\n# Start the actual service; note we remove the instance after it exits\nExecStart=/usr/bin/docker run --rm --name nginx -p 80:80 -p 443:443 -v /etc/service-configs/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -v /var/www/letsencrypt:/var/www/letsencrypt:z -v /etc/letsencrypt:/etc/letsencrypt:ro nginx:1.13\n# On exit, stop the container\nExecStop=/usr/bin/docker stop nginx\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enable": true,
+        "name": "nginx.service"
+      }
+    ]
+  }
+}
