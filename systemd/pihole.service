@@ -19,6 +19,9 @@ ExecStart=/usr/bin/docker run --rm \
 -e VIRTUAL_HOST=pihole.${MARAX_DOMAIN} \
 -e VIRTUAL_PORT=80 \
 -e WEBPASSWORD=${MARAX_PIHOLE_PASS} \
+-e DNS1=${MARAX_IP}#8053 \
+-e DNS2=no \
+-e DNSSEC=true \
 --name pihole \
 pihole/pihole:latest
 ExecStop=/usr/bin/docker stop pihole
