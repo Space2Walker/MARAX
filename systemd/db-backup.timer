@@ -1,0 +1,8 @@
+[Unit]
+Description=EPG-Download Timer
+
+[Timer]
+OnCalendar=monthly
+
+[Install]
+WantedBy=multi-user.target

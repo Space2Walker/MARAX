@@ -1,0 +1,8 @@
+[Unit]
+Description=EPG-Injector Timer
+
+[Timer]
+OnCalendar=04,16:00
+
+[Install]
+WantedBy=multi-user.target

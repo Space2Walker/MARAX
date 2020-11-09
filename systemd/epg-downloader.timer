@@ -1,0 +1,8 @@
+[Unit]
+Description=EPG-Download Timer
+
+[Timer]
+OnCalendar=Mon,Wed,Sat 03:00
+
+[Install]
+WantedBy=multi-user.target

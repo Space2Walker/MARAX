@@ -1,0 +1,10 @@
+[Unit]
+Description=DynDns Updatee Call
+After=default.target
+Requires=default.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/marax.conf
+User=root
+ExecStart=/usr/bin/curl "https://ddnss.de/upd.php?key=${DDNS_KEY}&host=${DDNS_HOST}"

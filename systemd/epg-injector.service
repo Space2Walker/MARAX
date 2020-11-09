@@ -1,0 +1,10 @@
+[Unit]
+Description=EPG-Injector
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/marax.conf
+User=root
+ExecStart=/usr/bin/docker run --rm -v ${MARAX_PATH}/samba/kodi/TV:/usr/src/app/out space2walker/epg-injector:latest

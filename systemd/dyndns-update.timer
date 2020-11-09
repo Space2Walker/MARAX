@@ -1,0 +1,8 @@
+[Unit]
+Description=DynDns Update Timer
+
+[Timer]
+OnCalendar=09:00
+
+[Install]
+WantedBy=multi-user.target

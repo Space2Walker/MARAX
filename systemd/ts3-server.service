@@ -1,0 +1,23 @@
+[Unit]
+Description=TS3 Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker stop ts3-server
+ExecStartPre=-/usr/bin/docker rm ts3-server
+ExecStartPre=/usr/bin/docker pull teamspeak:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/ts3:/var/ts3server \
+-p ${MARAX_IP}:9987:9987/udp \
+-p ${MARAX_IP}:10011:10011 \
+-p ${MARAX_IP}:30033:30033 \
+-e TS3SERVER_LICENSE=accept \
+--name ts3-server \
+teamspeak:latest
+
+[Install]
+WantedBy=multi-user.target

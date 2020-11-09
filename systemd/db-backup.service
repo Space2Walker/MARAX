@@ -1,0 +1,10 @@
+[Unit]
+Description=DB Backup
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/marax.conf
+User=root
+ExecStart=/bin/bash -c "${SCRIPT_PATH}/db-backup.sh"

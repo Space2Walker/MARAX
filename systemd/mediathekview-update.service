@@ -1,0 +1,18 @@
+[Unit]
+Description=Mediathek DB Update
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/marax.conf
+User=root
+ExecStartPre=/usr/bin/docker pull ghcr.io/space2walker/mediathekview-update:latest
+ExecStart=/usr/bin/docker run --rm \
+-e User=${MDB_USER} \
+-e Password=${MDB_PASS} \
+-e DB=${MDB_TYPE} \
+-e DB_Name=${MDB_NAME} \
+-e Host=${MARAX_IP} \
+--name mediathekview-update \
+ghcr.io/space2walker/mediathekview-update:latest

@@ -1,0 +1,8 @@
+[Unit]
+Description=Mediathek DB Update Timer
+
+[Timer]
+OnCalendar=04:00
+
+[Install]
+WantedBy=multi-user.target
