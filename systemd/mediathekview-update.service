@@ -1,7 +1,7 @@
 [Unit]
 Description=Mediathek DB Update
-After=docker.service
-Requires=docker.service
+After=mysql.service
+Requires=mysql.service
 
 [Service]
 Type=oneshot

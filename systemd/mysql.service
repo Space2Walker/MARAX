@@ -1,0 +1,24 @@
+[Unit]
+Description=MySQL Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+User=root
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull mysql:5.7
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/mysql:/var/lib/mysql \
+-p ${MARAX_IP}:3306:3306 \
+-e MYSQL_ROOT_PASSWORD=${SQL_PASS} \
+--name mysql \
+mysql:5.7
+ExecStop=/usr/bin/docker stop mysql
+
+[Install]
+WantedBy=multi-user.target
+
+
+

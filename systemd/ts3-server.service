@@ -4,7 +4,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-TimeoutStartSec=0
+TimeoutSec=120
 Restart=on-failure
 EnvironmentFile=/etc/marax.conf
 ExecStartPre=/usr/bin/docker pull teamspeak:latest
