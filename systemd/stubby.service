@@ -1,0 +1,18 @@
+[Unit]
+Description=Stubby DoT Resolver Service
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+User=root
+EnvironmentFile=/etc/marax.conf
+ExecStart=/usr/bin/docker run --rm \
+-p ${MARAX_IP}:8053:8053/udp \
+--name stubby \
+mvance/stubby:latest
+ExecStop=/usr/bin/docker stop stubby
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+[Unit]
+Description=Pi-Hole Service
+After=nginx-proxy.service stubby.service
+Requires=nginx-proxy.service stubby.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+User=root
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull pihole/pihole:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/pihole/pihole/:/etc/pihole/ \
+-v ${MARAX_PATH}/pihole/dnsmasq.d/:/etc/dnsmasq.d/ \
+-p ${MARAX_IP}:53:53/tcp \
+-p ${MARAX_IP}:53:53/udp \
+-e Ipv6="false" \
+-e ServerIP=${MARAX_REVERSE_IP} \
+-e VIRTUAL_HOST=pihole.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=80 \
+-e WEBPASSWORD=${MARAX_PIHOLE_PASS} \
+--name pihole \
+pihole/pihole:latest
+ExecStop=/usr/bin/docker stop pihole
+
+[Install]
+WantedBy=multi-user.target
