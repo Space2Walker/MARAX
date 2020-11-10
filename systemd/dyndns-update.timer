@@ -2,7 +2,8 @@
 Description=DynDns Update Timer
 
 [Timer]
+Unit=dyndns-update.service
 OnCalendar=09:00
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=timers.target

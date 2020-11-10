@@ -2,6 +2,7 @@
 Description=Mediathek DB Update
 After=mysql.service
 Requires=mysql.service
+Wants=mediathekview-update.timer
 
 [Service]
 Type=oneshot
@@ -16,3 +17,6 @@ ExecStart=/usr/bin/docker run --rm \
 -e Host=${MARAX_IP} \
 --name mediathekview-update \
 ghcr.io/space2walker/mediathekview-update:latest
+
+[Install]
+WantedBy=multi-user.target

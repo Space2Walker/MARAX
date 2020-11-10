@@ -2,9 +2,13 @@
 Description=EPG-Downloader
 After=docker.service
 Requires=docker.service
+Wants=epg-downloader.timer
 
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/marax.conf
 User=root
 ExecStart=/usr/bin/docker run --rm -v ${MARAX_PATH}/samba/kodi/TV:/usr/src/app/out space2walker/epg-downloader:latest
+
+[Install]
+WantedBy=multi-user.target

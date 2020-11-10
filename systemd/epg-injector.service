@@ -2,9 +2,13 @@
 Description=EPG-Injector
 After=docker.service
 Requires=docker.service
+Wants=epg-injector.timer
 
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/marax.conf
 User=root
 ExecStart=/usr/bin/docker run --rm -v ${MARAX_PATH}/samba/kodi/TV:/usr/src/app/out space2walker/epg-injector:latest
+
+[Install]
+WantedBy=multi-user.target

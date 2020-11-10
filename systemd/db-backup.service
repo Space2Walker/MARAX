@@ -2,9 +2,13 @@
 Description=DB Backup
 After=mysql.service
 Requires=mysql.service
+Wants=db-backup.timer
 
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/marax.conf
 User=root
 ExecStart=/bin/bash -c "${SCRIPT_PATH}/db-backup.sh"
+
+[Install]
+WantedBy=multi-user.target

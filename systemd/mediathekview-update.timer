@@ -2,7 +2,8 @@
 Description=Mediathek DB Update Timer
 
 [Timer]
+Unit=mediathekview-update.service
 OnCalendar=04:00
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=timers.target

@@ -1,8 +1,9 @@
 [Unit]
-Description=EPG-Download Timer
+Description=DB Backup Timer
 
 [Timer]
+Unit=db-backup.service
 OnCalendar=monthly
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=timers.target
