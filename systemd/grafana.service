@@ -7,6 +7,7 @@ Requires=docker.service nginx-proxy.service
 [Service]
 TimeoutSec=120
 Restart=on-failure
+User=root
 EnvironmentFile=/etc/marax.conf
 ExecStartPre=-/usr/bin/docker pull grafana/grafana:latest
 ExecStart=/usr/bin/docker run --rm \

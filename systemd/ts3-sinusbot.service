@@ -4,7 +4,7 @@ After=docker.service ts3-server.service nginx-proxy.service
 Requires=docker.service ts3-server.service nginx-proxy.service
 
 [Service]
-TimeoutSec=120
+TimeoutSec=240
 Restart=on-failure
 EnvironmentFile=/etc/marax.conf
 ExecStartPre=-/usr/bin/docker pull sinusbot/docker:latest

@@ -8,15 +8,15 @@ TimeoutSec=120
 Restart=on-failure
 User=root
 EnvironmentFile=/etc/marax.conf
-ExecStartPre=-/usr/bin/docker pull jwilder/nginx-proxy:alpine
+ExecStartPre=-/usr/bin/docker pull jwilder/nginx-proxy:latest
 ExecStart=/usr/bin/docker run --rm \
--v /var/run/docker.sock:/tmp/docker.sock \
+-v /var/run/docker.sock:/tmp/docker.sock:ro \
 -v ${MARAX_PATH}/certs:/etc/nginx/certs \
 -p ${MARAX_IP}:80:80 \
 -p ${MARAX_IP}:443:443 \
 -e DEFAULT_HOST=pihole.${MARAX_DOMAIN} \
 --name nginx-proxy \
-jwilder/nginx-proxy:alpine
+jwilder/nginx-proxy:latest
 ExecStop=/usr/bin/docker stop nginx-proxy
 
 [Install]
