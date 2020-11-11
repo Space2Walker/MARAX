@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run --rm \
 -e VIRTUAL_HOST=sync.${MARAX_DOMAIN} \
 -e VIRTUAL_PORT=8888 \
 --name resilio-sync \
+--network dns \
 resilio/sync:latest
 ExecStop=/usr/bin/docker stop resilio-sync
 

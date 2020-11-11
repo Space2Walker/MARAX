@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run --rm \
 -e VIRTUAL_HOST=nextcloud.${MARAX_DOMAIN} \
 -e VIRTUAL_PORT=80 \
 --name nextcloud \
+--network dns \
 nextcloud:latest
 ExecStop=/usr/bin/docker stop nextcloud
 
