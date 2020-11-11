@@ -23,7 +23,7 @@ ExecStart=/usr/bin/docker run --rm \
 -e DNS1=${MARAX_IP}#8053 \
 -e DNS2=no \
 -e DNSSEC="true" \
--e DNS_BOGUS_PRIV="false" \
+-e DNS_BOGUS_PRIV="true" \
 -e DNS_FQDN_REQUIRED="true" \
 --name pihole \
 --network dns \
