@@ -11,7 +11,9 @@ EnvironmentFile=/etc/marax.conf
 ExecStartPre=-/usr/bin/docker pull jwilder/nginx-proxy:latest
 ExecStart=/usr/bin/docker run --rm \
 -v /var/run/docker.sock:/tmp/docker.sock:ro \
+-v ${MARAX_PATH}/certs:/etc/nginx/certs \
 -p ${MARAX_IP}:80:80 \
+-p ${MARAX_IP}:443:443 \
 -e DEFAULT_HOST=pihole.${MARAX_DOMAIN} \
 --name nginx-proxy \
 jwilder/nginx-proxy:latest
