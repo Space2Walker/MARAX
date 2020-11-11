@@ -4,6 +4,7 @@ After=pihole.service
 Requires=pihole.service
 
 [Service]
+Type=simple
 TimeoutSec=120
 Restart=on-failure
 User=root

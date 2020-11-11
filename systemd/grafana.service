@@ -5,6 +5,7 @@ After=docker.service nginx-proxy.service
 Requires=docker.service nginx-proxy.service
 
 [Service]
+Type=simple
 TimeoutSec=120
 Restart=on-failure
 User=root

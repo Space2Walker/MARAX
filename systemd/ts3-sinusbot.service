@@ -4,6 +4,7 @@ After=docker.service ts3-server.service nginx-proxy.service
 Requires=docker.service ts3-server.service nginx-proxy.service
 
 [Service]
+Type=simple
 TimeoutSec=240
 Restart=on-failure
 EnvironmentFile=/etc/marax.conf

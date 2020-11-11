@@ -5,6 +5,7 @@ After=docker.service nginx-proxy.service mysql.service
 Requires=docker.service nginx-proxy.service mysql.service
 
 [Service]
+Type=simple
 TimeoutSec=120
 Restart=on-failure
 EnvironmentFile=/etc/marax.conf

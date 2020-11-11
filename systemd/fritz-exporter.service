@@ -4,6 +4,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
+Type=simple
 TimeoutSec=120
 Restart=on-failure
 ExecStart=/usr/bin/docker run --rm \
