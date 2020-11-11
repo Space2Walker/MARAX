@@ -10,6 +10,7 @@ ExecStart=/usr/bin/docker run --rm \
 -e FRITZ_HOST=192.168.178.1 \
 -e FRITZ_EXPORTER_PORT=9618 \
 --name fritz-exporter \
+--network monitoring \
 fritzbox_exporter:latest
 ExecStop=/usr/bin/docker stop fritz-exporter
 

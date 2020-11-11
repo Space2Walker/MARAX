@@ -11,6 +11,7 @@ EnvironmentFile=/etc/marax.conf
 ExecStart=/usr/bin/docker run --rm \
 -p ${MARAX_IP}:8053:8053/udp \
 --name stubby \
+--network dns \
 mvance/stubby:latest
 ExecStop=/usr/bin/docker stop stubby
 

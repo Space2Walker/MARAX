@@ -25,6 +25,7 @@ ExecStart=/usr/bin/docker run --rm \
 -e DNS_BOGUS_PRIV="false" \
 -e DNS_FQDN_REQUIRED="true" \
 --name pihole \
+--network dns \
 pihole/pihole:latest
 ExecStop=/usr/bin/docker stop pihole
 
