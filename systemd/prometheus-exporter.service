@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Node Exporter
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+ExecStartPre=-/usr/bin/docker pull prom/node-exporter:latest
+ExecStart=/usr/bin/docker run --rm \
+--name node-exporter \
+node-exporter:latest
+ExecStop=/usr/bin/docker stop node-exporter
+
+[Install]
+WantedBy=multi-user.target

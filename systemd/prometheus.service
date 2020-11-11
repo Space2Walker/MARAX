@@ -1,0 +1,21 @@
+[Unit]
+Description=Prometheus Server
+After=docker.service nginx-proxy.service
+Requires=docker.service nginx-proxy.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull prom/prometheus:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/prometheus.yml:/etc/prometheus/prometheus.yml \
+-v ${MARAX_PATH}/prometheus:/prometheus \
+-e VIRTUAL_HOST=prometheus.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=9090 \
+--name prometheus \
+prom/prometheus:latest
+ExecStop=/usr/bin/docker stop prometheus
+
+[Install]
+WantedBy=multi-user.target

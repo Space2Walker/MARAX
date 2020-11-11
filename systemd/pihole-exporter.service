@@ -1,0 +1,22 @@
+[Unit]
+Description=Pihole Exporter for Prometheus
+After=pihole.service
+Requires=pihole.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+User=root
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull ekofr/pihole-exporter:latest
+ExecStart=/usr/bin/docker run --rm \
+-e PIHOLE_HOSTNAME=pihole \
+-e PIHOLE_PASSWORD=${MARAX_PIHOLE_PASS} \
+-e INTERVAL=30s \
+-e PORT=9617 \
+--name pihole-exporter \
+ekofr/pihole-exporter:latest
+ExecStop=/usr/bin/docker stop pihole-exporter
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Grafana Server
+Documentation=https://hub.docker.com/r/grafana/grafana
+After=docker.service nginx-proxy.service
+Requires=docker.service nginx-proxy.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull grafana/grafana:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/grafana:/var/lib/grafana \
+-e VIRTUAL_HOST=grafana.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=9090 \
+--name grafana \
+grafana/grafana:latest
+ExecStop=/usr/bin/docker stop grafana
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Resilio Sync Server
+After=docker.service nginx-proxy.service
+Requires=docker.service nginx-proxy.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull resilio/sync:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/sync:/mnt/sync \
+-p ${MARAX_IP}:55555:55555 \
+-e VIRTUAL_HOST=sync.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=8888 \
+--name resilio-sync \
+resilio/sync:latest
+ExecStop=/usr/bin/docker stop resilio-sync
+
+[Install]
+WantedBy=multi-user.target

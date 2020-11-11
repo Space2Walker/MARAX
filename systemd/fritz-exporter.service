@@ -1,0 +1,18 @@
+[Unit]
+Description=Fritz-Box Exporter for Prometheus
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+ExecStart=/usr/bin/docker run --rm \
+-e FRITZ_HOST=192.168.178.1 \
+-e FRITZ_EXPORTER_PORT=9618 \
+--name fritz-exporter \
+fritzbox_exporter:latest
+ExecStop=/usr/bin/docker stop fritz-exporter
+
+[Install]
+WantedBy=multi-user.target
+

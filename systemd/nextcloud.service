@@ -1,0 +1,21 @@
+[Unit]
+Description=Nextcloud Server
+Documentation=https://hub.docker.com/_/nextcloud
+After=docker.service nginx-proxy.service mysql.service
+Requires=docker.service nginx-proxy.service mysql.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull nextcloud:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/nextcloud:/var/www/html \
+-e VIRTUAL_HOST=nextcloud.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=80 \
+--name nextcloud \
+nextcloud:latest
+ExecStop=/usr/bin/docker stop nextcloud
+
+[Install]
+WantedBy=multi-user.target

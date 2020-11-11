@@ -1,0 +1,21 @@
+[Unit]
+Description=TS3 Music Bot
+After=docker.service ts3-server.service nginx-proxy.service
+Requires=docker.service ts3-server.service nginx-proxy.service
+
+[Service]
+TimeoutSec=120
+Restart=on-failure
+EnvironmentFile=/etc/marax.conf
+ExecStartPre=-/usr/bin/docker pull sinusbot/docker:latest
+ExecStart=/usr/bin/docker run --rm \
+-v ${MARAX_PATH}/sinusbot/scripts:/opt/sinusbot/scripts \
+-v ${MARAX_PATH}/sinusbot/data:/opt/sinusbot/data \
+-e VIRTUAL_HOST=sinusbot.${MARAX_DOMAIN} \
+-e VIRTUAL_PORT=8087 \
+--name sinusbot \
+sinusbot/docker:latest
+ExecStop=/usr/bin/docker stop sinusbot
+
+[Install]
+WantedBy=multi-user.target
