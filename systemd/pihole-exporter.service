@@ -17,7 +17,7 @@ ExecStart=/usr/bin/docker run --rm \
 --name pihole-exporter \
 --network dns \
 ekofr/pihole-exporter:latest
-ExecStartPost=/usr/bin/docker network connect bridge monitoring
+ExecStartPost=/usr/bin/docker network connect monitoring pihole-exporter
 ExecStop=/usr/bin/docker stop pihole-exporter
 
 [Install]
