@@ -28,7 +28,6 @@ ExecStart=/usr/bin/docker run --rm \
 --name pihole \
 --network dns \
 pihole/pihole:latest
-ExecStartPost=/usr/bin/docker network connect frontend pihole
 ExecStop=/usr/bin/docker stop pihole
 
 [Install]

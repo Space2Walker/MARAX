@@ -10,7 +10,7 @@ Restart=on-failure
 ExecStartPre=-/usr/bin/docker pull prom/node-exporter:latest
 ExecStart=/usr/bin/docker run --rm \
 --name node-exporter \
---network monitoring \
+--network dns \
 prom/node-exporter:latest
 ExecStop=/usr/bin/docker stop node-exporter
 
